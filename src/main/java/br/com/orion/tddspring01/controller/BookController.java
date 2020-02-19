@@ -4,8 +4,8 @@ import br.com.orion.tddspring01.exceptions.ResourceNotFoundException;
 import br.com.orion.tddspring01.model.Book;
 import br.com.orion.tddspring01.model.dto.BookDto;
 import br.com.orion.tddspring01.service.IBookService;
+import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -20,14 +20,12 @@ import java.util.stream.Collectors;
  * BookController
  */
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("api/books")
 public class BookController {
 
-    @Autowired
-    private IBookService bookService;
-
-    @Autowired
-    private ModelMapper map;
+    private final IBookService bookService;
+    private final ModelMapper map;
 
     @PostMapping
     @ResponseStatus(code = HttpStatus.CREATED)

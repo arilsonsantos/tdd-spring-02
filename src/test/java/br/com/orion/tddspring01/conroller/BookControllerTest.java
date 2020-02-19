@@ -1,5 +1,6 @@
 package br.com.orion.tddspring01.conroller;
 
+import br.com.orion.tddspring01.controller.BookController;
 import br.com.orion.tddspring01.exceptions.ResourceAlreadyExistsException;
 import br.com.orion.tddspring01.exceptions.ResourceNotFoundException;
 import br.com.orion.tddspring01.model.Book;
@@ -10,20 +11,14 @@ import org.assertj.core.api.Assertions;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.BDDMockito;
 import org.mockito.Mockito;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
-import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
@@ -39,19 +34,14 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 /**
  * BookControllerTest
  */
-@ExtendWith(SpringExtension.class)
-@AutoConfigureMockMvc
-@WebMvcTest
-@ActiveProfiles("test")
-public class BookControllerTest {
+@WebMvcTest(controllers = BookController.class)
+public class BookControllerTest extends AbstractControllerTest {
 
-    @Autowired
-    private MockMvc mvc;
+    private static final String BOOK_API = "/api/books";
 
     @MockBean
     IBookService service;
 
-    private static final String BOOK_API = "/api/books";
 
     @Test
     @DisplayName("Create a new book")
@@ -224,7 +214,6 @@ public class BookControllerTest {
                 .accept(MediaType.APPLICATION_JSON);
 
 
-
         mvc.perform(request)
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("content", Matchers.hasSize(1)))
@@ -233,6 +222,5 @@ public class BookControllerTest {
                 .andExpect(jsonPath("pageable.pageNumber").value(0));
 
     }
-
 
 }

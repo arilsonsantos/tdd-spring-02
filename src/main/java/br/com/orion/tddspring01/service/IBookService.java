@@ -1,12 +1,11 @@
 package br.com.orion.tddspring01.service;
 
-import java.util.Optional;
-
+import br.com.orion.tddspring01.model.Book;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import br.com.orion.tddspring01.model.Book;
+import java.util.Optional;
 
 /**
  * IBookService
@@ -23,4 +22,6 @@ public interface IBookService {
     Book update(Book book);
 
     Page<Book> find(Book filter, Pageable pageRequest);
+
+    Optional<Book> getBookByIsbn(String isbn);
 }
