@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/loans")
@@ -21,12 +22,17 @@ public class LoanController {
 
     @PostMapping()
     @ResponseStatus(code = HttpStatus.CREATED)
-    public Long create(@RequestBody LoanDto loanDto){
-        final Book book = bookService.getBookByIsbn(loanDto.getIsbn()).get();
-        Loan loan = Loan.builder().book(book).customer(loanDto.getCustomer()).loanDate(LocalDate.now()).build();
+    public Long create(@RequestBody LoanDto loanDto) {
+        Loan loan = null;
+        Optional<Book> book = bookService.getBookByIsbn(loanDto.getIsbn());
+
+        if (book.isPresent()) {
+            loan = Loan.builder().book(book.get()).customer(loanDto.getCustomer()).loanDate(LocalDate.now()).build();
+        }
+
         loan = loanService.save(loan);
 
         return loan.getId();
-
     }
+
 }
