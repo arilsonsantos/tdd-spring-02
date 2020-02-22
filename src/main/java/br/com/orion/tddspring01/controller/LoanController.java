@@ -1,5 +1,6 @@
 package br.com.orion.tddspring01.controller;
 
+import br.com.orion.tddspring01.exceptions.ResourceNotFoundException;
 import br.com.orion.tddspring01.model.Book;
 import br.com.orion.tddspring01.model.Loan;
 import br.com.orion.tddspring01.model.dto.LoanDto;
@@ -23,15 +24,10 @@ public class LoanController {
     @PostMapping()
     @ResponseStatus(code = HttpStatus.CREATED)
     public Long create(@RequestBody LoanDto loanDto) {
-        Loan loan = null;
-        Optional<Book> book = bookService.getBookByIsbn(loanDto.getIsbn());
+        Book book = bookService.getBookByIsbn(loanDto.getIsbn()).orElseThrow(() -> new ResourceNotFoundException("Book not found by Isbn :" + loanDto.getIsbn()));
 
-        if (book.isPresent()) {
-            loan = Loan.builder().book(book.get()).customer(loanDto.getCustomer()).loanDate(LocalDate.now()).build();
-        }
-
+        Loan loan = Loan.builder().book(book).customer(loanDto.getCustomer()).loanDate(LocalDate.now()).build();
         loan = loanService.save(loan);
-
         return loan.getId();
     }
 
