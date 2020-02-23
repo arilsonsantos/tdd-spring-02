@@ -64,7 +64,7 @@ public class BookService implements IBookService {
 
     @Override
     public Optional<Book> getBookByIsbn(String isbn) {
-        return Optional.empty();
+        return bookRepository.getBookByIsbn(isbn);
     }
 
     private void isNullBook(Book book) {

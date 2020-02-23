@@ -5,6 +5,8 @@ import org.springframework.stereotype.Repository;
 
 import br.com.orion.tddspring01.model.Book;
 
+import java.util.Optional;
+
 /**
  * BookRepository
  */
@@ -12,4 +14,6 @@ import br.com.orion.tddspring01.model.Book;
 public interface BookRepository extends JpaRepository<Book, Long> {
 
     boolean existsByIsbn(String isbn);
+
+    Optional<Book> getBookByIsbn(String isbn);
 }
