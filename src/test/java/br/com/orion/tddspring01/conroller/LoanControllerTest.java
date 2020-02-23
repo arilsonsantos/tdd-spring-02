@@ -1,16 +1,15 @@
 package br.com.orion.tddspring01.conroller;
 
 
-import br.com.orion.tddspring01.controller.LoanController;
-import br.com.orion.tddspring01.exceptions.BookAlreadyLoanedException;
-import br.com.orion.tddspring01.exceptions.ResourceNotFoundException;
-import br.com.orion.tddspring01.model.Book;
-import br.com.orion.tddspring01.model.Loan;
-import br.com.orion.tddspring01.model.dto.LoanDto;
-import br.com.orion.tddspring01.service.IBookService;
-import br.com.orion.tddspring01.service.ILoanService;
-import com.fasterxml.jackson.core.JsonProcessingException;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import java.time.LocalDate;
+import java.util.Optional;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.BDDMockito;
@@ -21,11 +20,13 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import java.awt.*;
-import java.time.LocalDate;
-import java.util.Optional;
-
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import br.com.orion.tddspring01.controller.LoanController;
+import br.com.orion.tddspring01.exceptions.BookAlreadyLoanedException;
+import br.com.orion.tddspring01.model.Book;
+import br.com.orion.tddspring01.model.Loan;
+import br.com.orion.tddspring01.model.dto.LoanDto;
+import br.com.orion.tddspring01.service.IBookService;
+import br.com.orion.tddspring01.service.ILoanService;
 
 @WebMvcTest(controllers = LoanController.class)
 public class LoanControllerTest extends AbstractControllerTest {

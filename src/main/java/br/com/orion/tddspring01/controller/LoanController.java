@@ -1,5 +1,14 @@
 package br.com.orion.tddspring01.controller;
 
+import java.time.LocalDate;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
+
 import br.com.orion.tddspring01.exceptions.ResourceNotFoundException;
 import br.com.orion.tddspring01.model.Book;
 import br.com.orion.tddspring01.model.Loan;
@@ -7,11 +16,6 @@ import br.com.orion.tddspring01.model.dto.LoanDto;
 import br.com.orion.tddspring01.service.IBookService;
 import br.com.orion.tddspring01.service.ILoanService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.*;
-
-import java.time.LocalDate;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/loans")
